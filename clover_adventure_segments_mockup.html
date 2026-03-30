@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clover Stonefield | Adventure Chronicle Mock-Up</title>
+  <style>
+    :root {
+      --page-bg: #f2e8d3;
+      --page-bg-deep: #e8dbc0;
+      --ink: #2f271c;
+      --ink-soft: #5d4f39;
+      --line: #b89c6a;
+      --line-dark: #8d7448;
+      --panel: rgba(255, 249, 236, 0.72);
+      --panel-strong: rgba(248, 239, 220, 0.9);
+      --accent: #7b5d29;
+      --accent-soft: #a78548;
+      --shadow: rgba(74, 54, 22, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.65;
+      background:
+        radial-gradient(circle at top, rgba(255, 252, 244, 0.85), transparent 38%),
+        linear-gradient(to bottom, rgba(255,255,255,0.18), rgba(0,0,0,0.02)),
+        var(--page-bg);
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 56px;
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 24px;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 18px;
+      align-self: start;
+      padding: 20px 18px;
+      background: var(--panel);
+      border: 1px solid rgba(141, 116, 72, 0.45);
+      border-radius: 14px;
+      box-shadow: 0 8px 22px var(--shadow);
+      backdrop-filter: blur(2px);
+    }
+
+    .sidebar h1 {
+      margin: 0 0 6px;
+      font-size: 1.55rem;
+      line-height: 1.15;
+      color: var(--accent);
+    }
+
+    .sidebar .subtitle {
+      margin: 0 0 18px;
+      color: var(--ink-soft);
+      font-size: 0.96rem;
+    }
+
+    .sidebar .era-note {
+      margin: 0 0 18px;
+      padding: 10px 12px;
+      border-left: 4px solid var(--accent-soft);
+      background: rgba(255,255,255,0.25);
+      font-size: 0.95rem;
+    }
+
+    .sidebar nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .sidebar nav a {
+      display: block;
+      padding: 8px 10px;
+      border-radius: 8px;
+      color: var(--ink);
+      transition: background 0.18s ease;
+    }
+
+    .sidebar nav a:hover {
+      background: rgba(123, 93, 41, 0.10);
+      text-decoration: none;
+    }
+
+    .content {
+      min-width: 0;
+    }
+
+    .document-header {
+      margin-bottom: 28px;
+      padding: 26px 28px;
+      background: var(--panel);
+      border: 1px solid rgba(141, 116, 72, 0.48);
+      border-radius: 18px;
+      box-shadow: 0 8px 24px var(--shadow);
+    }
+
+    .document-header .eyebrow {
+      margin: 0 0 8px;
+      font-size: 0.84rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .document-header h2 {
+      margin: 0 0 10px;
+      font-size: clamp(1.9rem, 4vw, 2.6rem);
+      line-height: 1.1;
+      color: #4d3815;
+    }
+
+    .document-header p {
+      margin: 0;
+      max-width: 75ch;
+      color: var(--ink-soft);
+    }
+
+    .era-divider {
+      margin: 34px 0 24px;
+      padding: 16px 20px;
+      border-top: 2px solid var(--line-dark);
+      border-bottom: 1px solid rgba(141, 116, 72, 0.45);
+      background: linear-gradient(to right, rgba(255,255,255,0.2), rgba(184,156,106,0.08), rgba(255,255,255,0.2));
+      border-radius: 10px;
+    }
+
+    .era-divider h3 {
+      margin: 0 0 4px;
+      font-size: 1.35rem;
+      color: var(--accent);
+    }
+
+    .era-divider p {
+      margin: 0;
+      color: var(--ink-soft);
+    }
+
+    .segment {
+      margin: 0 0 30px;
+      background: var(--panel-strong);
+      border: 1px solid rgba(141, 116, 72, 0.55);
+      border-radius: 18px;
+      box-shadow: 0 10px 26px var(--shadow);
+      overflow: hidden;
+    }
+
+    .segment-header {
+      padding: 20px 22px 18px;
+      background: linear-gradient(to bottom, rgba(196, 167, 111, 0.16), rgba(255,255,255,0.16));
+      border-bottom: 1px solid rgba(141, 116, 72, 0.35);
+    }
+
+    .segment-kicker {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 10px;
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .segment-header h4 {
+      margin: 0 0 8px;
+      font-size: 1.7rem;
+      line-height: 1.15;
+      color: #493512;
+    }
+
+    .segment-header p {
+      margin: 0;
+      color: var(--ink-soft);
+    }
+
+    .segment-body {
+      padding: 22px;
+      display: grid;
+      gap: 22px;
+    }
+
+    .info-panel {
+      padding: 16px 18px;
+      background: rgba(255,255,255,0.28);
+      border: 1px solid rgba(141, 116, 72, 0.38);
+      border-radius: 14px;
+    }
+
+    .info-panel h5,
+    .text-block h5,
+    .reaction h5,
+    .summary h5,
+    .images h5,
+    .tags h5 {
+      margin: 0 0 12px;
+      font-size: 1.02rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .state-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px 18px;
+    }
+
+    .state-item {
+      min-width: 0;
+    }
+
+    .state-item dt {
+      margin: 0 0 4px;
+      font-size: 0.84rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+
+    .state-item dd {
+      margin: 0;
+      font-size: 1rem;
+      color: var(--ink);
+    }
+
+    .text-block {
+      padding: 18px 20px;
+      background: rgba(255,255,255,0.24);
+      border-left: 5px solid var(--accent-soft);
+      border-radius: 14px;
+    }
+
+    .text-block p {
+      margin: 0 0 1rem;
+    }
+
+    .text-block p:last-child {
+      margin-bottom: 0;
+    }
+
+    .images {
+      padding: 18px 20px;
+      background: rgba(255,255,255,0.24);
+      border: 1px solid rgba(141, 116, 72, 0.34);
+      border-radius: 14px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .image-entry {
+      display: grid;
+      grid-template-columns: minmax(240px, 360px) minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(141, 116, 72, 0.22);
+    }
+
+    .image-entry:last-child {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+
+    .image-entry img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      border: 1px solid rgba(141, 116, 72, 0.52);
+      box-shadow: 0 5px 14px rgba(74, 54, 22, 0.16);
+      background: #d8c5a0;
+    }
+
+    .image-meta {
+      min-width: 0;
+      display: grid;
+      gap: 8px;
+      align-content: start;
+      padding-top: 4px;
+    }
+
+    .image-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #4a3614;
+    }
+
+    .image-caption {
+      margin: 0;
+      color: var(--ink-soft);
+    }
+
+    .reaction,
+    .summary,
+    .tags {
+      padding: 18px 20px;
+      border-radius: 14px;
+    }
+
+    .reaction {
+      background: rgba(237, 223, 190, 0.50);
+      border: 1px solid rgba(141, 116, 72, 0.42);
+    }
+
+    .summary {
+      background: rgba(255,255,255,0.22);
+      border: 1px dashed rgba(141, 116, 72, 0.58);
+    }
+
+    .tags {
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(141, 116, 72, 0.28);
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(123, 93, 41, 0.10);
+      border: 1px solid rgba(123, 93, 41, 0.22);
+      color: #5c441a;
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+
+    .top-link {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 0.92rem;
+    }
+
+    .empty-images-note {
+      margin: 0;
+      color: var(--ink-soft);
+      font-style: italic;
+    }
+
+    @media (max-width: 980px) {
+      .page {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .segment-body,
+      .document-header,
+      .segment-header,
+      .sidebar,
+      .era-divider {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .state-grid,
+      .image-entry {
+        grid-template-columns: 1fr;
+      }
+
+      .image-meta {
+        padding-top: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page" id="top">
+    <aside class="sidebar">
+      <h1>Clover Stonefield</h1>
+      <p class="subtitle">Adventure Chronicle</p>
+      <p class="era-note">This layout is built for ongoing updates, repeated segment structure, optional images, and eventual splitting into narrative eras.</p>
+
+      <nav>
+        <ul>
+          <li><a href="#era-one">Era I · The Road to Whiterun</a></li>
+          <li><a href="#segment-001">Segment 001 · Dust on Her Boots</a></li>
+          <li><a href="#segment-002">Segment 002 · Trouble on the Road</a></li>
+          <li><a href="#era-two">Era II · First Steps into Legend</a></li>
+          <li><a href="#segment-003">Segment 003 · The Hall of the Companions</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <header class="document-header">
+        <p class="eyebrow">Chronicle Document</p>
+        <h2>The Saga of Clover Stonefield</h2>
+        <p>
+          This document tracks Clover’s adventures in structured segments. Each segment records her opening state,
+          your adventure text, optional images with titles and captions, commentary, summary, closing state,
+          and continuity tags.
+        </p>
+      </header>
+
+      <section class="era-divider" id="era-one">
+        <h3>Era I · The Road to Whiterun</h3>
+        <p>Farmgirl bravado, travel dust, and the first hard knocks on the path toward glory.</p>
+      </section>
+
+      <article class="segment" id="segment-001">
+        <header class="segment-header">
+          <div class="segment-kicker">
+            <span>Segment 001</span>
+            <span>Era I</span>
+            <span>Rorikstead to Whiterun Road</span>
+          </div>
+          <h4>Dust on Her Boots</h4>
+          <p>A sample entry showing the standard structure for a segment with one image.</p>
+        </header>
+
+        <div class="segment-body">
+          <section class="info-panel">
+            <h5>Opening State</h5>
+            <dl class="state-grid">
+              <div class="state-item">
+                <dt>Location</dt>
+                <dd>Rorikstead outskirts, preparing to depart east</dd>
+              </div>
+              <div class="state-item">
+                <dt>Companions Present</dt>
+                <dd>Erik</dd>
+              </div>
+              <div class="state-item">
+                <dt>Weapons</dt>
+                <dd>Iron greatsword, woodcutter’s axe</dd>
+              </div>
+              <div class="state-item">
+                <dt>Armor / Clothing</dt>
+                <dd>Simple farm clothes, leather boots, travel cloak</dd>
+              </div>
+              <div class="state-item">
+                <dt>Special Items</dt>
+                <dd>Coin pouch, bread, cured beef, waterskin</dd>
+              </div>
+              <div class="state-item">
+                <dt>Conditions</dt>
+                <dd>Uninjured, overconfident, loudly eager</dd>
+              </div>
+              <div class="state-item">
+                <dt>Mount / Transport</dt>
+                <dd>None</dd>
+              </div>
+              <div class="state-item">
+                <dt>Immediate Objective</dt>
+                <dd>Reach Whiterun and begin the path toward the Companions</dd>
+              </div>
+            </dl>
+          </section>
+
+          <section class="text-block">
+            <h5>Adventure Segment</h5>
+            <p>Clover left Rorikstead with all the certainty in the world and roughly half the wisdom she thought she had. She talked nearly the whole road out of town, boasting to Erik about the fights she planned to win, the warriors she’d impress, and how fast Whiterun would recognize greatness once it saw her coming.</p>
+            <p>She kept shifting the iron greatsword on her shoulder like it weighed nothing, even though by noon it had begun introducing itself to every muscle in her back. She refused to admit this. When the road turned and Whiterun finally appeared in the distance, she grinned like she’d already conquered it.</p>
+          </section>
+
+          <section class="images">
+            <h5>Images</h5>
+
+            <figure class="image-entry">
+              <img src="https://placehold.co/720x460/e2d1ad/4d3815?text=Segment+Image+01" alt="Clover on the road toward Whiterun" />
+              <figcaption class="image-meta">
+                <div class="image-title">First Sight of Whiterun</div>
+                <p class="image-caption">A visual record for the road east, with Clover still wearing travel clothes and carrying more confidence than practical experience.</p>
+              </figcaption>
+            </figure>
+          </section>
+
+          <section class="reaction">
+            <h5>Reaction</h5>
+            <p>This sort of opening plants Clover exactly where she should be: loud, energized, physically game, and already narrating her own legend before the world has agreed to it. The nice texture here is that her self-belief is not elegant or measured. It comes thundering out of her in a flood, which fits her beautifully.</p>
+          </section>
+
+          <section class="summary">
+            <h5>Summary</h5>
+            <p>Clover leaves Rorikstead with Erik and begins the journey toward Whiterun. She spends the trip talking boldly about future glory, ignores signs of physical strain, and arrives with her determination fully intact.</p>
+          </section>
+
+          <section class="info-panel">
+            <h5>Closing State</h5>
+            <dl class="state-grid">
+              <div class="state-item">
+                <dt>Location</dt>
+                <dd>Whiterun approach road, city in sight</dd>
+              </div>
+              <div class="state-item">
+                <dt>Companions Present</dt>
+                <dd>Erik</dd>
+              </div>
+              <div class="state-item">
+                <dt>Weapons</dt>
+                <dd>Iron greatsword, woodcutter’s axe</dd>
+              </div>
+              <div class="state-item">
+                <dt>Armor / Clothing</dt>
+                <dd>Travel cloak dusty, boots road-worn</dd>
+              </div>
+              <div class="state-item">
+                <dt>Special Items</dt>
+                <dd>Food supplies reduced</dd>
+              </div>
+              <div class="state-item">
+                <dt>Conditions</dt>
+                <dd>Tired but hiding it, spirits high</dd>
+              </div>
+              <div class="state-item">
+                <dt>Quest Status</dt>
+                <dd>Arrival at Whiterun imminent</dd>
+              </div>
+              <div class="state-item">
+                <dt>Continuity Notes</dt>
+                <dd>Introduces Clover’s voice, ambition, and habit of overruling discomfort</dd>
+              </div>
+            </dl>
+          </section>
+
+          <section class="tags">
+            <h5>Tags</h5>
+            <div class="tag-list">
+              <span class="tag">Rorikstead</span>
+              <span class="tag">Whiterun</span>
+              <span class="tag">Erik</span>
+              <span class="tag">Beginnings</span>
+              <span class="tag">Travel</span>
+              <span class="tag">Companions Dream</span>
+            </div>
+            <a class="top-link" href="#top">Back to top</a>
+          </section>
+        </div>
+      </article>
+
+      <article class="segment" id="segment-002">
+        <header class="segment-header">
+          <div class="segment-kicker">
+            <span>Segment 002</span>
+            <span>Era I</span>
+            <span>Western Watch Road</span>
+          </div>
+          <h4>Trouble on the Road</h4>
+          <p>A sample entry showing the same structure with multiple images.</p>
+        </header>
+
+        <div class="segment-body">
+          <section class="info-panel">
+            <h5>Opening State</h5>
+            <dl class="state-grid">
+              <div class="state-item">
+                <dt>Location</dt>
+                <dd>Road west of Whiterun</dd>
+              </div>
+              <div class="state-item">
+                <dt>Companions Present</dt>
+                <dd>Erik</dd>
+              </div>
+              <div class="state-item">
+                <dt>Weapons</dt>
+                <dd>Iron greatsword</dd>
+              </div>
+              <div class="state-item">
+                <dt>Armor / Clothing</dt>
+                <dd>Hide armor, travel cloak removed</dd>
+              </div>
+              <div class="state-item">
+                <dt>Special Items</dt>
+                <dd>One weak healing potion</dd>
+              </div>
+              <div class="state-item">
+                <dt>Conditions</dt>
+                <dd>Fresh confidence, no wounds</dd>
+              </div>
+              <div class="state-item">
+                <dt>Mount / Transport</dt>
+                <dd>None</dd>
+              </div>
+              <div class="state-item">
+                <dt>Immediate Objective</dt>
+                <dd>Earn coin and prove herself in a real fight</dd>
+              </div>
+            </dl>
+          </section>
+
+          <section class="text-block">
+            <h5>Adventure Segment</h5>
+            <p>Clover got her chance sooner than expected when trouble found the road before she had even properly settled into Whiterun life. She launched herself into the fight with a kind of delighted fury that would have looked more impressive if she had not also nearly tripped on loose stone during the first charge.</p>
+            <p>Still, once steel started moving, Clover committed with her whole body and all her noise. Erik helped steady the encounter, while Clover transformed it into something halfway between a brawl and a declaration of destiny. By the end she was bruised, exhilarated, and fully prepared to describe the whole thing as a glorious victory with only minor editing.</p>
+          </section>
+
+          <section class="images">
+            <h5>Images</h5>
+
+            <figure class="image-entry">
+              <img src="https://placehold.co/700x420/dcc79d/4a3614?text=Segment+Image+02A" alt="Roadside clash" />
+              <figcaption class="image-meta">
+                <div class="image-title">Roadside Clash</div>
+                <p class="image-caption">The encounter that let Clover finally swing steel in earnest, with all the enthusiasm and imperfect control one might expect.</p>
+              </figcaption>
+            </figure>
+
+            <figure class="image-entry">
+              <img src="https://placehold.co/640x760/d4bf95/4a3614?text=Segment+Image+02B" alt="Aftermath on the road" />
+              <figcaption class="image-meta">
+                <div class="image-title">Aftermath and Boasting Rights</div>
+                <p class="image-caption">A second visual record for the segment, showing how a portrait-shaped image still fits the same layout cleanly, with title and caption aligned to the right.</p>
+              </figcaption>
+            </figure>
+          </section>
+
+          <section class="reaction">
+            <h5>Reaction</h5>
+            <p>What works here is that Clover does not become competent in a tidy, polished way. She bursts into danger with force, makes the moment messier, and still comes out of it feeling enlarged by the experience. That makes her progression feel much more alive than a clean power climb would.</p>
+          </section>
+
+          <section class="summary">
+            <h5>Summary</h5>
+            <p>Clover enters an early roadside fight near Whiterun, throws herself into it with loud aggression, and emerges bruised but thrilled. Erik helps stabilize the danger while Clover treats the whole event as proof that her warrior ambitions are justified.</p>
+          </section>
+
+          <section class="info-panel">
+            <h5>Closing State</h5>
+            <dl class="state-grid">
+              <div class="state-item">
+                <dt>Location</dt>
+                <dd>Roadside near Whiterun, fight concluded</dd>
+              </div>
+              <div class="state-item">
+                <dt>Companions Present</dt>
+                <dd>Erik</dd>
+              </div>
+              <div class="state-item">
+                <dt>Weapons</dt>
+                <dd>Iron greatsword nicked from use</dd>
+              </div>
+              <div class="state-item">
+                <dt>Armor / Clothing</dt>
+                <dd>Hide armor scuffed</dd>
+              </div>
+              <div class="state-item">
+                <dt>Special Items</dt>
+                <dd>Healing potion consumed</dd>
+              </div>
+              <div class="state-item">
+                <dt>Conditions</dt>
+                <dd>Bruised, winded, ecstatic</dd>
+              </div>
+              <div class="state-item">
+                <dt>Quest Status</dt>
+                <dd>First real fight completed</dd>
+              </div>
+              <div class="state-item">
+                <dt>Continuity Notes</dt>
+                <dd>Clover begins converting every survival into personal mythmaking</dd>
+              </div>
+            </dl>
+          </section>
+
+          <section class="tags">
+            <h5>Tags</h5>
+            <div class="tag-list">
+              <span class="tag">Whiterun Hold</span>
+              <span class="tag">Combat</span>
+              <span class="tag">Erik</span>
+              <span class="tag">Bruises</span>
+              <span class="tag">Boasting</span>
+              <span class="tag">Momentum</span>
+            </div>
+            <a class="top-link" href="#top">Back to top</a>
+          </section>
+        </div>
+      </article>
+
+      <section class="era-divider" id="era-two">
+        <h3>Era II · First Steps into Legend</h3>
+        <p>The dream sharpens, the stakes grow teeth, and Clover starts brushing against places larger than her own swagger.</p>
+      </section>
+
+      <article class="segment" id="segment-003">
+        <header class="segment-header">
+          <div class="segment-kicker">
+            <span>Segment 003</span>
+            <span>Era II</span>
+            <span>Whiterun</span>
+          </div>
+          <h4>The Hall of the Companions</h4>
+          <p>A sample entry showing the structure when a segment has no images at all.</p>
+        </header>
+
+        <div class="segment-body">
+          <section class="info-panel">
+            <h5>Opening State</h5>
+            <dl class="state-grid">
+              <div class="state-item">
+                <dt>Location</dt>
+                <dd>Whiterun, approaching Jorrvaskr</dd>
+              </div>
+              <div class="state-item">
+                <dt>Companions Present</dt>
+                <dd>Erik nearby</dd>
+              </div>
+              <div class="state-item">
+                <dt>Weapons</dt>
+                <dd>Iron greatsword</dd>
+              </div>
+              <div class="state-item">
+                <dt>Armor / Clothing</dt>
+                <dd>Hide armor, cleaned as best she could manage</dd>
+              </div>
+              <div class="state-item">
+                <dt>Special Items</dt>
+                <dd>Small pouch of earnings</dd>
+              </div>
+              <div class="state-item">
+                <dt>Conditions</dt>
+                <dd>Excited, trying and failing to act dignified</dd>
+              </div>
+              <div class="state-item">
+                <dt>Mount / Transport</dt>
+                <dd>None</dd>
+              </div>
+              <div class="state-item">
+                <dt>Immediate Objective</dt>
+                <dd>Present herself before the Companions</dd>
+              </div>
+            </dl>
+          </section>
+
+          <section class="text-block">
+            <h5>Adventure Segment</h5>
+            <p>Standing before Jorrvaskr hit Clover harder than she expected. She still talked plenty, of course, because silence was never likely to save her, but there was something newly careful under the noise. This was not a roadside scuffle she could simply crash into and then narrate in her own favor afterward. This was the dream itself sitting in timber and smoke before her.</p>
+            <p>Even so, she held herself upright, squared her shoulders, and walked forward like she belonged there. Whether she truly did yet remained a separate question, but Clover had never been one to wait for permission before acting as though legend had already cleared a seat for her.</p>
+          </section>
+
+          <section class="images">
+            <h5>Images</h5>
+            <p class="empty-images-note">No images recorded for this segment.</p>
+          </section>
+
+          <section class="reaction">
+            <h5>Reaction</h5>
+            <p>This is a nice tonal widening. Clover does not stop being herself, but the world briefly feels bigger than her own voice, and that creates a useful tension. It lets her ambition remain loud while still acknowledging that some places can make even her swagger hesitate for half a heartbeat.</p>
+          </section>
+
+          <section class="summary">
+            <h5>Summary</h5>
+            <p>Clover approaches Jorrvaskr and feels the weight of her dream more intensely than before. She remains talkative and bold, but the moment introduces a touch of seriousness as she steps toward the Companions.</p>
+          </section>
+
+          <section class="info-panel">
+            <h5>Closing State</h5>
+            <dl class="state-grid">
+              <div class="state-item">
+                <dt>Location</dt>
+                <dd>At Jorrvaskr, on the threshold of the Companions</dd>
+              </div>
+              <div class="state-item">
+                <dt>Companions Present</dt>
+                <dd>Erik nearby</dd>
+              </div>
+              <div class="state-item">
+                <dt>Weapons</dt>
+                <dd>Iron greatsword</dd>
+              </div>
+              <div class="state-item">
+                <dt>Armor / Clothing</dt>
+                <dd>Hide armor presentable but worn</dd>
+              </div>
+              <div class="state-item">
+                <dt>Special Items</dt>
+                <dd>Earnings retained</dd>
+              </div>
+              <div class="state-item">
+                <dt>Conditions</dt>
+                <dd>Nervous energy under outward bravado</dd>
+              </div>
+              <div class="state-item">
+                <dt>Quest Status</dt>
+                <dd>Ready to step into the next phase</dd>
+              </div>
+              <div class="state-item">
+                <dt>Continuity Notes</dt>
+                <dd>Introduces a more reverent note in Clover’s relationship to glory</dd>
+              </div>
+            </dl>
+          </section>
+
+          <section class="tags">
+            <h5>Tags</h5>
+            <div class="tag-list">
+              <span class="tag">Jorrvaskr</span>
+              <span class="tag">Companions</span>
+              <span class="tag">Threshold Moment</span>
+              <span class="tag">Whiterun</span>
+              <span class="tag">Ambition</span>
+            </div>
+            <a class="top-link" href="#top">Back to top</a>
+          </section>
+        </div>
+      </article>
+    </main>
+  </div>
+</body>
+</html>
