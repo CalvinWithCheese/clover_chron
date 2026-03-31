@@ -1,0 +1,150 @@
+{
+  "sidebar": {
+    "title": "Clover Stonefield",
+    "subtitle": "Adventure Chronicle"
+  },
+  "document": {
+    "eyebrow": "Chronicle Document",
+    "title": "The Saga of Clover Stonefield",
+    "description": "This document tracks Clover’s adventures in structured segments. Every segment follows the same order: Adventure Segment, Images, Commentary, Summary, and State."
+  },
+  "eras": [
+    {
+      "slug": "era-one",
+      "label": "Era I",
+      "title": "Era I · The Road to Whiterun",
+      "subtitle": "Farmgirl bravado, travel dust, and the first hard knocks on the path toward glory.",
+      "segments": [
+        {
+          "slug": "segment-001",
+          "number": "001",
+          "title": "Dust on Her Boots",
+          "location": "Rorikstead to Whiterun Road",
+          "tagline": "[tagline]",
+          "adventureText": [
+            "Clover left Rorikstead with all the certainty in the world and roughly half the wisdom she thought she had. She talked nearly the whole road out of town, boasting to Erik about the fights she planned to win, the warriors she’d impress, and how fast Whiterun would recognize greatness once it saw her coming.",
+            "She kept shifting the iron greatsword on her shoulder like it weighed nothing, even though by noon it had begun introducing itself to every muscle in her back. She refused to admit this. When the road turned and Whiterun finally appeared in the distance, she grinned like she’d already conquered it."
+          ],
+          "images": [
+            {
+              "src": "https://placehold.co/720x460/e2d1ad/4d3815?text=Segment+Image+01",
+              "alt": "Clover on the road toward Whiterun",
+              "title": "First Sight of Whiterun",
+              "caption": "A visual record for the road east, with Clover still wearing travel clothes and carrying more confidence than practical experience."
+            }
+          ],
+          "commentary": [
+            {
+              "speaker": "Assistant",
+              "content": "This opening nails Clover’s momentum: she feels larger than the world she’s stepping into, which gives the whole segment a bright reckless energy."
+            },
+            {
+              "speaker": "User",
+              "content": "I like that she’s overconfident but not fake. The physical strain detail keeps it grounded and funny."
+            },
+            {
+              "speaker": "Assistant",
+              "content": "Agreed. Her voice stays bold, but the road quietly proves she still has growing to do."
+            }
+          ],
+          "summary": "Clover leaves Rorikstead with Erik and begins the journey toward Whiterun. She spends the trip talking boldly about future glory, ignores signs of physical strain, and arrives with determination fully intact.",
+          "state": {
+            "Location": "Whiterun approach road, city in sight",
+            "Weapons": "Iron greatsword, woodcutter’s axe",
+            "Gear": "Dusty travel cloak, road-worn boots, food supplies reduced",
+            "Status": "Tired but hiding it, spirits high",
+            "Special items": "Coin pouch, remaining travel provisions",
+            "Objective": "Enter Whiterun and begin her Companions pursuit"
+          }
+        },
+        {
+          "slug": "segment-002",
+          "number": "002",
+          "title": "Trouble on the Road",
+          "location": "Western Watch Road",
+          "tagline": "A sample entry showing the same structure with multiple images.",
+          "adventureText": [
+            "Clover got her chance sooner than expected when trouble found the road before she had even properly settled into Whiterun life. She launched herself into the fight with a kind of delighted fury that would have looked more impressive if she had not also nearly tripped on loose stone during the first charge.",
+            "Still, once steel started moving, Clover committed with her whole body and all her noise. Erik helped steady the encounter, while Clover transformed it into something halfway between a brawl and a declaration of destiny. By the end she was bruised, exhilarated, and fully prepared to describe the whole thing as a glorious victory with only minor editing."
+          ],
+          "images": [
+            {
+              "src": "https://placehold.co/700x420/dcc79d/4a3614?text=Segment+Image+02A",
+              "alt": "Roadside clash",
+              "title": "Roadside Clash",
+              "caption": "The encounter that let Clover finally swing steel in earnest, with all the enthusiasm and imperfect control one might expect."
+            },
+            {
+              "src": "https://placehold.co/640x760/d4bf95/4a3614?text=Segment+Image+02B",
+              "alt": "Aftermath on the road",
+              "title": "Aftermath and Boasting Rights",
+              "caption": "A second visual record showing how portrait images keep the same left-image, right-metadata layout."
+            }
+          ],
+          "commentary": [
+            {
+              "speaker": "Assistant",
+              "content": "Her growth feels earned because she doesn’t become elegant overnight—she stays loud, messy, and committed."
+            },
+            {
+              "speaker": "User",
+              "content": "Yes, and Erik balancing her chaos gives the fight a better rhythm than a solo triumph."
+            },
+            {
+              "speaker": "Assistant",
+              "content": "Exactly. It keeps the scene character-driven while still moving her legend forward."
+            }
+          ],
+          "summary": "Clover enters an early roadside fight near Whiterun, throws herself into it with loud aggression, and emerges bruised but thrilled. Erik helps stabilize the danger while Clover treats the whole event as proof that her warrior ambitions are justified.",
+          "state": {
+            "Location": "Roadside near Whiterun, fight concluded",
+            "Weapons": "Iron greatsword nicked from use",
+            "Gear": "Scuffed hide armor, no remaining healing potion",
+            "Status": "Bruised, winded, ecstatic",
+            "Special items": "Recovered coin and salvage from skirmish",
+            "Objective": "Leverage this win into real standing in Whiterun"
+          }
+        }
+      ]
+    },
+    {
+      "slug": "era-two",
+      "label": "Era II",
+      "title": "Era II · First Steps into Legend",
+      "subtitle": "The dream sharpens, the stakes grow teeth, and Clover starts brushing against places larger than her swagger.",
+      "segments": [
+        {
+          "slug": "segment-003",
+          "number": "003",
+          "title": "The Hall of the Companions",
+          "location": "Whiterun",
+          "tagline": "A sample entry showing the structure when a segment has zero images.",
+          "adventureText": [
+            "Standing before Jorrvaskr hit Clover harder than she expected. She still talked plenty, because silence was never likely to save her, but there was something newly careful under the noise. This was not a roadside scuffle she could simply crash into and then narrate in her own favor afterward.",
+            "Even so, she held herself upright, squared her shoulders, and walked forward like she belonged there. Whether she truly did yet remained a separate question, but Clover had never been one to wait for permission before acting as though legend had already cleared a seat for her."
+          ],
+          "images": [],
+          "commentary": [
+            {
+              "speaker": "Assistant",
+              "content": "This widens the tone well—she is still Clover, but the setting finally pushes back on her certainty."
+            },
+            {
+              "speaker": "User",
+              "content": "That hesitation is exactly what I wanted. It keeps her boldness without making her flat."
+            }
+          ],
+          "summary": "Clover approaches Jorrvaskr and feels the weight of her dream more intensely than before. She remains talkative and bold, but the moment introduces a touch of seriousness as she steps toward the Companions.",
+          "state": {
+            "Location": "At Jorrvaskr, on the Companions’ threshold",
+            "Weapons": "Iron greatsword",
+            "Gear": "Presentable but worn hide armor",
+            "Status": "Nervous energy under outward bravado",
+            "Special items": "Small pouch of earnings",
+            "Objective": "Present herself to the Companions and secure a chance"
+          }
+        }
+      ]
+    }
+  ]
+}
