@@ -13,7 +13,7 @@ function toggleFromButton(button) {
 }
 
 function bindCollapsibleButtons() {
-  document.querySelectorAll('.era-header, .segment-header, .collapsible-trigger').forEach((button) => {
+  document.querySelectorAll('.era-header, .segment-header, .prologue-header, .collapsible-trigger').forEach((button) => {
     button.addEventListener('click', () => {
       toggleFromButton(button);
       if (button.classList.contains('collapsible-trigger')) {
@@ -26,6 +26,18 @@ function bindCollapsibleButtons() {
 function buildToc() {
   const toc = document.getElementById('toc');
   toc.textContent = '';
+
+  const prologue = document.getElementById('prologue');
+  if (prologue) {
+    const prologueTitle = prologue.getAttribute('data-prologue-title') || 'Prologue';
+    const prologueLi = document.createElement('li');
+    const prologueLink = document.createElement('a');
+    prologueLink.className = 'toc-link';
+    prologueLink.href = '#prologue';
+    prologueLink.textContent = prologueTitle;
+    prologueLi.appendChild(prologueLink);
+    toc.appendChild(prologueLi);
+  }
 
   document.querySelectorAll('.era').forEach((era) => {
     const eraId = era.id;
@@ -52,18 +64,7 @@ function buildToc() {
 
     eraHeader.appendChild(eraToggle);
     eraHeader.appendChild(eraLink);
-
-    const segmentsList = document.createElement('ul');
-    segmentsList.id = tocEraId;
-    segmentsList.className = 'toc-segments';
-    segmentsList.hidden = true;
-
-    era.querySelectorAll('.segment').forEach((segment) => {
-      const number = segment.getAttribute('data-segment-number') || '???';
-      const title = segment.getAttribute('data-segment-title') || segment.id;
-      const item = document.createElement('li');
-      const link = document.createElement('a');
-      link.className = 'toc-link';
+@@ -67,83 +79,89 @@ function buildToc() {
       link.href = `#${segment.id}`;
       link.textContent = `Segment ${number} · ${title}`;
       link.addEventListener('click', () => {
@@ -89,7 +90,7 @@ function syncTocArrows() {
 }
 
 function expandCollapseAll(expand) {
-  document.querySelectorAll('.era-header, .segment-header, .collapsible-trigger').forEach((button) => {
+  document.querySelectorAll('.era-header, .segment-header, .prologue-header, .collapsible-trigger').forEach((button) => {
     setExpanded(button, expand);
   });
   syncTocArrows();
@@ -111,17 +112,23 @@ function createSectionWithHeading(className, headingText) {
   return section;
 }
 
-function renderSegment(segment, eraLabel, eraSlug, segmentIndex) {
+function renderSegment(segment, eraLabel, segmentIndex, options = {}) {
   const segmentSlug = segment.slug || `segment-${String(segment.number || segmentIndex + 1).padStart(3, '0')}`;
 
   const article = document.createElement('article');
   article.className = 'segment';
+  if (options.additionalClass) {
+    article.classList.add(options.additionalClass);
+  }
   article.id = segmentSlug;
   article.setAttribute('data-segment-number', String(segment.number || '???'));
   article.setAttribute('data-segment-title', segment.title || segmentSlug);
 
   const headerButton = document.createElement('button');
   headerButton.className = 'segment-header';
+  if (options.headerClass) {
+    headerButton.classList.add(options.headerClass);
+  }
   headerButton.type = 'button';
   headerButton.setAttribute('data-target', `${segmentSlug}-content`);
   headerButton.setAttribute('aria-expanded', 'false');
@@ -147,82 +154,7 @@ function renderSegment(segment, eraLabel, eraSlug, segmentIndex) {
   headerButton.append(kicker, title, tagline);
 
   const body = document.createElement('div');
-  body.className = 'segment-body';
-  body.id = `${segmentSlug}-content`;
-  body.hidden = true;
-
-  const textSection = createSectionWithHeading('text-block', 'Adventure Segment');
-  (segment.adventureText || []).forEach((paragraphText) => {
-    const p = document.createElement('p');
-    p.textContent = paragraphText;
-    textSection.appendChild(p);
-  });
-
-  const imagesSection = createSectionWithHeading('images', 'Images');
-  if (!segment.images || !segment.images.length) {
-    const noImages = document.createElement('p');
-    noImages.textContent = 'No images recorded for this segment.';
-    imagesSection.appendChild(noImages);
-  } else {
-    segment.images.forEach((image) => {
-      const figure = document.createElement('figure');
-      figure.className = 'image-entry';
-
-      const img = document.createElement('img');
-      img.src = image.src;
-      img.alt = image.alt || image.title || 'Segment image';
-
-      const figCaption = document.createElement('figcaption');
-      figCaption.className = 'image-meta';
-
-      const imageTitle = document.createElement('div');
-      imageTitle.className = 'image-title';
-      imageTitle.textContent = image.title || 'Untitled image';
-
-      const imageCaption = document.createElement('p');
-      imageCaption.className = 'image-caption';
-      imageCaption.textContent = image.caption || '';
-
-      figCaption.append(imageTitle, imageCaption);
-      figure.append(img, figCaption);
-      imagesSection.appendChild(figure);
-    });
-  }
-
-  body.append(textSection, imagesSection);
-
-  const hasCommentary = Array.isArray(segment.commentary) && segment.commentary.length > 0;
-  if (hasCommentary) {
-    const commentarySection = createSectionWithHeading('commentary', 'Commentary');
-    const commentaryList = document.createElement('div');
-    commentaryList.className = 'commentary-list';
-    segment.commentary.forEach((entry) => {
-      const entryArticle = document.createElement('article');
-      entryArticle.className = 'commentary-entry';
-
-      const speaker = document.createElement('p');
-      speaker.className = 'commentary-speaker';
-      speaker.textContent = entry.speaker || 'Unknown';
-
-      const content = document.createElement('p');
-      content.className = 'commentary-content';
-      content.textContent = entry.content || '';
-
-      entryArticle.append(speaker, content);
-      commentaryList.appendChild(entryArticle);
-    });
-    commentarySection.appendChild(commentaryList);
-    body.appendChild(commentarySection);
-  }
-
-  const hasSummary = typeof segment.summary === 'string' && segment.summary.trim().length > 0;
-  if (hasSummary) {
-    const summarySection = createSectionWithHeading('summary', 'Summary');
-    const summaryText = document.createElement('p');
-    summaryText.textContent = segment.summary;
-    summarySection.appendChild(summaryText);
-    body.appendChild(summarySection);
-  }
+@@ -226,102 +244,143 @@ function renderSegment(segment, eraLabel, eraSlug, segmentIndex) {
 
   const hasState = segment.state && Object.keys(segment.state).length > 0;
   if (hasState) {
@@ -246,6 +178,47 @@ function renderSegment(segment, eraLabel, eraSlug, segmentIndex) {
   }
   article.append(headerButton, body);
   return article;
+}
+
+function renderPrologue(prologue) {
+  const wrapper = document.createElement('section');
+  wrapper.className = 'prologue-card';
+  wrapper.id = 'prologue';
+  wrapper.setAttribute('data-prologue-title', prologue.label || 'Prologue');
+
+  const heading = document.createElement('header');
+  heading.className = 'prologue-heading';
+
+  const eyebrow = document.createElement('p');
+  eyebrow.className = 'prologue-eyebrow';
+  eyebrow.textContent = prologue.label || 'Prologue';
+
+  const title = document.createElement('h3');
+  title.textContent = prologue.title || 'Untitled Prologue';
+
+  const subtitle = document.createElement('p');
+  subtitle.className = 'prologue-subtitle';
+  subtitle.textContent = prologue.subtitle || '';
+
+  heading.append(eyebrow, title, subtitle);
+
+  const prologueSegment = {
+    ...prologue,
+    number: prologue.number || '000',
+    title: prologue.title || 'Untitled Prologue',
+    location: prologue.location || 'Location TBD',
+    tagline: prologue.tagline || prologue.subtitle || '[tagline]'
+  };
+
+  wrapper.append(
+    heading,
+    renderSegment(prologueSegment, prologue.label || 'Prologue', 0, {
+      additionalClass: 'prologue-segment',
+      headerClass: 'prologue-header'
+    })
+  );
+
+  return wrapper;
 }
 
 function renderEra(era, eraIndex) {
@@ -274,7 +247,7 @@ function renderEra(era, eraIndex) {
   content.hidden = true;
 
   (era.segments || []).forEach((segment, segmentIndex) => {
-    content.appendChild(renderSegment(segment, era.label || era.title || `Era ${eraIndex + 1}`, eraSlug, segmentIndex));
+    content.appendChild(renderSegment(segment, era.label || era.title || `Era ${eraIndex + 1}`, segmentIndex));
   });
 
   section.append(headerButton, content);
@@ -298,8 +271,8 @@ async function loadChronicle() {
 
   const erasRoot = document.getElementById('eras-root');
   erasRoot.textContent = '';
-  if (data.prologue && data.prologue.segments && data.prologue.segments.length) {
-    erasRoot.appendChild(renderEra(data.prologue, -1));
+  if (data.prologue) {
+    erasRoot.appendChild(renderPrologue(data.prologue));
   }
 
   (data.eras || []).forEach((era, index) => {

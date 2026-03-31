@@ -129,6 +129,39 @@ a:hover { text-decoration: underline; }
 .document-header h2 { margin: 0 0 10px; font-size: clamp(1.9rem, 4vw, 2.6rem); line-height: 1.1; color: #4d3815; }
 .document-header p { margin: 0; max-width: 75ch; color: var(--ink-soft); }
 
+.prologue-card {
+  margin-bottom: 22px;
+  padding: 18px;
+  border: 1px solid rgba(141, 116, 72, 0.52);
+  border-radius: 14px;
+  background: linear-gradient(to bottom, rgba(255, 248, 230, 0.82), rgba(255, 255, 255, 0.32));
+  box-shadow: 0 8px 20px rgba(74, 54, 22, 0.12);
+}
+
+.prologue-heading {
+  margin-bottom: 14px;
+  padding: 0 4px;
+}
+
+.prologue-eyebrow {
+  margin: 0 0 6px;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.prologue-heading h3 {
+  margin: 0 0 6px;
+  font-size: 1.5rem;
+  color: #4d3815;
+}
+
+.prologue-subtitle {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
 .era {
   margin-bottom: 22px;
   border: 1px solid rgba(141, 116, 72, 0.45);
@@ -183,6 +216,14 @@ a:hover { text-decoration: underline; }
 
 .segment-header h4 { margin: 0 0 8px; font-size: 1.7rem; line-height: 1.15; color: #493512; }
 .segment-header p { margin: 0; color: var(--ink-soft); }
+
+.prologue-segment {
+  border-color: rgba(141, 116, 72, 0.48);
+}
+
+.prologue-header {
+  background: linear-gradient(to bottom, rgba(214, 181, 120, 0.18), rgba(255,255,255,0.2));
+}
 
 .segment-body { padding: 22px; display: grid; gap: 22px; }
 
