@@ -332,12 +332,12 @@
           <article class="segment" id="segment-001" data-segment-number="001" data-segment-title="Dust on Her Boots">
             <button class="segment-header" type="button" data-target="segment-001-content" aria-expanded="false">
               <div class="segment-kicker">
-                <span>Segment 001</span>
                 <span>Era I</span>
+                <span>Segment 001</span>
                 <span>Rorikstead to Whiterun Road</span>
               </div>
               <h4>Dust on Her Boots</h4>
-              <p>A sample entry showing the standard segment flow with one image.</p>
+              <p>[tagline]</p>
             </button>
 
             <div class="segment-body" id="segment-001-content" hidden>
@@ -600,6 +600,12 @@
           link.className = 'toc-link';
           link.href = `#${segment.id}`;
           link.textContent = `Segment ${number} · ${title}`;
+		  link.addEventListener('click', () => {
+            const eraHeaderButton = era.querySelector('.era-header');
+            const segmentHeaderButton = segment.querySelector('.segment-header');
+            if (eraHeaderButton) setExpanded(eraHeaderButton, true);
+            if (segmentHeaderButton) setExpanded(segmentHeaderButton, true);
+          });
           item.appendChild(link);
           segmentsList.appendChild(item);
         });
